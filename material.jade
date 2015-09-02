@@ -1,0 +1,133 @@
+mixin form
+    form.generic-form(name="inputForm" model=attributes.model)
+      block
+mixin chips
+  md-chips.custom-chips(ng:init="model.#{attributes.name} = []"
+                        ng-model="model.#{attributes.name}"
+                        name=attributes.name
+                        placeholder="+#{attributes.title}"
+                        delete-button-label="Remove Item" 
+                        secondary-placeholder=attributes.title )
+    md-chip-template
+      span
+        strong {{$chip}}
+    button.md-primary.vegetablechip(
+        md-chip-remove='' 
+        style="background-color: transparent; border: 0px")
+      md-icon(md-svg-icon='md-close')
+
+mixin select
+  md-select(ng-model="model.#{attributes.name}" placeholder=attributes.title)
+    md-option(ng-value="opt.name" ng-repeat="opt in options.#{attributes.name}") {{ opt.title }}
+
+mixin list
+  md-list
+    md-list-item(layout="row" ng:init="#{attributes.name}template = {}")
+      div(layout="column" flex="" ng:repeat="item in [#{attributes.name}template]")
+        block
+      div(layout="column" ng:init="model.#{attributes.name} = []")
+        md-button.md-primary(ng:click="add(model.#{attributes.name}, #{attributes.name}template)") Add
+    md-list-item(ng:repeat="item in model.#{attributes.name}" layout="row")
+      div(layout="column" flex="")
+        block
+      div(layout="column")
+        md-button.md-warn(ng:click="remove(model.#{attributes.name}, $index)") Remove
+mixin _error-messages
+  div(ng-messages='form.#{attributes.name}.$error' 
+        ng-show='form.#{attributes.name}.$dirty')
+      if attributes.req
+        div(ng-message='required') This is required.
+      if attributes.min
+        div(ng-message='minlength') Must be more than 200 characters long.
+      if attributes.max
+      div(ng-message='md-maxlength') Must be less than 1000 characters long.
+mixin horizontal
+  div(layout="row")
+    block
+mixin email
+  md-input-container(flex="")
+    label #{attributes.title}
+    input(type="email"
+          required=attributes.req
+          minlength=attributes.min 
+          md-maxlength=attributes.max
+          ng:model=(attributes.name ? "model.#{attributes.name}" : "item.name")
+          name=attributes.name)
+    +_error-messages
+mixin password
+  md-input-container(flex="")
+    label #{attributes.title}
+    input(type="password"
+          required=attributes.req
+          minlength=attributes.min 
+          md-maxlength=attributes.max
+          ng:model=(attributes.name ? "model.#{attributes.name}" : "item.name")
+          name=attributes.name)
+    +_error-messages
+mixin text
+  md-input-container(flex="")
+    label #{attributes.title}
+    input(type="text"
+          required=attributes.req
+          minlength=attributes.min 
+          md-maxlength=attributes.max
+          ng:model=(attributes.name ? "model.#{attributes.name}" : "item.name")
+          name=attributes.name)
+    +_error-messages
+mixin phone
+  md-input-container(flex="")
+    label #{attributes.title}
+    input(type="text"
+          required=attributes.req
+          minlength=attributes.min 
+          md-maxlength=attributes.max
+          ng:model=(attributes.name ? "model.#{attributes.name}" : "item.name")
+          name=attributes.name)
+    +_error-messages
+mixin textarea
+  md-input-container(flex="")
+    label #{attributes.title}
+    textarea(required=attributes.req
+             minlength=attributes.min 
+             md:maxlength=attributes.max
+             ng:model=(attributes.name ? "model.#{attributes.name}" : "item.name")
+             name=attributes.name)
+    +_error-messages
+mixin number
+  md-input-container(flex="")
+    label #{attributes.title}
+    input(type="number" 
+          ng:model="model.#{attributes.name}")
+    +_error-messages
+mixin date
+  md-input-container(flex="")
+    label #{attributes.title}
+    input(type="date" 
+          ng:model="model.#{attributes.name}")
+    +_error-messages
+mixin weekdays
+  div(layout="row")
+    each val, index in ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+      md-input-container(flex="")
+        label #{val}
+        input(type="checkbox" ng:model="model.#{attributes.name}.#{val}" )
+mixin checkbox
+  md-input-container(flex="")
+    md-checkbox(ng-model="model.#{attributes.name}")
+      block
+    +_error-messages
+mixin location
+  md-input-container(flex="")
+    label #{attributes.title}
+    input(type="text"
+          google-places='model.#{attributes.name}')
+    +_error-messages
+mixin cancel
+  md-button.md-raised(ng:click=attributes.click) #{attributes.title}
+mixin submit
+  md-button.md-raised(ng:disabled='inputForm.$invalid'
+                      ng:click=attributes.success) #{attributes.title}
+mixin validate
+  .validate-form(test=attributes.test
+                 error=attributes.error)
+  
