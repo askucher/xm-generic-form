@@ -1,0 +1,50 @@
+@keyframes showUp
+  from
+    height: 0px
+  to
+    height: 30px
+@keyframes showDown
+  from
+    height: 30px
+  to
+    height: 0px
+@mixin showUp
+  animation-name: showUp
+  animation-duration: 1s
+  animation-fill-mode: both
+@mixin showDown
+  animation-name: showDown
+  animation-duration: 1s
+  animation-fill-mode: both
+
+.generic-form
+  .validate-form
+    @include showDown
+    &.active
+      color: red
+      padding: 5px 5px
+      background-color: rgba(255, 0, 93, 0.04)
+      overflow: hidden
+      @include showUp
+  button
+    margin: 4px
+  text-align: left
+  input, textarea
+    width: 100%
+  .md-chips 
+    margin-bottom: 30px
+    .md-chip, .md-chip-input-container
+      line-height: 32px
+      font-size: 13px
+      strong
+        line-height: 32px
+  .image
+    font-size: 11px
+    .md-button
+      font-size: 11px
+    .my-drop-zone
+      border: 1px dashed #CCC
+      padding: 50px
+      color: #CCC
+      text-align: center
+      font-size: 25px
